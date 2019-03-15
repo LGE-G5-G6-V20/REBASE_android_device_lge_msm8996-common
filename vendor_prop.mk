@@ -126,13 +126,13 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.demo.hdmirotationlock=false \
     sdm.perf_hint_window=50 \
     persist.hwc.enable_vds=1 \
-    debug.sf.early.app.duration=16500000 \
-    debug.sf.early.sf.duration=16000000 \
-    debug.sf.earlyGl.app.duration=21000000 \
-    debug.sf.earlyGl.sf.duration=13500000 \
-    debug.sf.late.app.duration=20500000 \
-    debug.sf.late.sf.duration=10500000 \
-    debug.sf.use_phase_offsets_as_durations=1
+
+# Surfaceflinger
+PRODUCT_PROPERTY_OVERRIDES += \
+    debug.sf.early_phase_offset_ns=1500000 \
+    debug.sf.early_app_phase_offset_ns=1500000 \
+    debug.sf.early_gl_phase_offset_ns=3000000 \
+    debug.sf.early_gl_app_phase_offset_ns=15000000
 
 # HWUI
 PRODUCT_PROPERTY_OVERRIDES += \
