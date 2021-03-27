@@ -163,44 +163,39 @@ vendor/lib/libsymphony-1.1.1.so
 -vendor/lib/hw/gatekeeper.msm8996.so
 -vendor/lib64/hw/gatekeeper.msm8996.so
 
-# GPS
-lib/vendor.qti.gnss@1.0.so
-lib64/vendor.qti.gnss@1.0.so
-lib64/android.hardware.gnss@8.0.so
-vendor/bin/hw/vendor.qti.gnss@1.0-service
+# GPS - from daisy' xiaomi/daisy/daisy_sprout:10/QKQ1.191002.002/V11.0.7.0.QDLMIXM
 vendor/bin/loc_launcher
 vendor/bin/lowi-server
+vendor/bin/slim_daemon
 vendor/bin/xtra-daemon
-vendor/etc/init/vendor.qti.gnss@1.0-service.rc
-vendor/lib/hw/vendor.qti.gnss@1.0-impl.so
-vendor/lib/vendor.qti.gnss@1.0_vendor.so
-vendor/lib64/hw/vendor.qti.gnss@1.0-impl.so
-vendor/lib64/lib_drplugin_server.so
--vendor/lib64/libloc_api_v02.so
-vendor/lib64/libloc_ds_api.so
-vendor/lib64/libalarmservice_jni.so
+vendor/etc/cacert_location.pem
+-vendor/etc/vintf/manifest/vendor.qti.gnss@3.0-service.xml
+vendor/etc/xtra_root_cert.pem
+vendor/lib64/hw/vendor.qti.gnss@3.0-impl.so
 vendor/lib64/libdataitems.so
-vendor/lib64/libdrplugin_client.so
-vendor/lib64/libDRPlugin.so
-vendor/lib64/libevent_observer.so
-vendor/lib64/libflp.so
 vendor/lib64/libgdtap.so
-vendor/lib64/libgeofence.so
 vendor/lib64/libizat_client_api.so
 vendor/lib64/libizat_core.so
 vendor/lib64/liblbs_core.so
-vendor/lib64/libloc_externalDr.so
+vendor/lib64/libloc_api_v02.so
 vendor/lib64/liblocationservice_glue.so
 vendor/lib64/liblocationservice.so
 vendor/lib64/liblowi_client.so
 vendor/lib64/liblowi_wifihal.so
-vendor/lib64/libquipc_os_api.so
-vendor/lib64/libulp2.so
+vendor/lib64/libqdma_file_agent.so
+vendor/lib64/libslimclient.so
 vendor/lib64/libxtadapter.so
-vendor/lib64/libxtwifi_ulp_adaptor.so
-vendor/lib64/vendor.qti.gnss@1.0_vendor.so
-vendor/lib64/libhui.so
-vendor/lib64/libux.so
+vendor/lib64/vendor.qti.gnss@1.0.so
+vendor/lib64/vendor.qti.gnss@1.1.so
+vendor/lib64/vendor.qti.gnss@1.2.so
+vendor/lib64/vendor.qti.gnss@2.0.so
+vendor/lib64/vendor.qti.gnss@2.1.so
+vendor/lib64/vendor.qti.gnss@3.0-service.so
+vendor/lib64/vendor.qti.gnss@3.0.so
+
+# GPS - from leeco x2 (prebuilt)
+vendor/lib/libwifi-hal-ctrl.so|f1760164537acbbc6554d6197d4d3827074cb57e
+vendor/lib64/libwifi-hal-ctrl.so|fb187f553721bd78d18c6dae640c39e7b1370d7f
 
 # Graphics
 etc/permissions/com.qti.snapdragon.sdk.display.xml
