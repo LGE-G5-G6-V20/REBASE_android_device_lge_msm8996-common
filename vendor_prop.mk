@@ -199,3 +199,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.radio.VT_ENABLE=1 \
     persist.radio.VT_HYBRID_ENABLE=1 \
     persist.vendor.qti.telephony.vt_cam_interface=1
+    
+# Storage.xml moment
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.sys.binary_xml=false
+
+
