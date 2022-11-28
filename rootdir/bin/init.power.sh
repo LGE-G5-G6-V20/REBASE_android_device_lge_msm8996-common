@@ -4,6 +4,7 @@
 # local definitions
 
 soc_revision=`cat /sys/devices/soc0/revision`
+soc_machine=`cat /sys/devices/soc0/machine`
 
 ################################################################################
 
@@ -62,14 +63,15 @@ write /sys/devices/system/cpu/cpu2/cpufreq/interactive/ignore_hispeed_on_notif 0
 write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "schedutil"
 write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor "schedutil"
 
-# set schedutil adjustments, based on the "Balanced" Spectrum profile for LGE_8996
+# set schedutil adjustments, based on what a "Balanced" Spectrum profile 
+# would be for the LGE_8996 platform. With this profile, the SoC's
 # CPU0 (little core cluster) will boost slightly more than CPU2 (big core cluster)
 # since the LITTLE 1.2GHz cap from the Balanced profile is where they start
 # losing efficiency.
-write /sys/devices/system/cpu/cpu0/cpufreq/schedutil/down_rate_limit_us 1000
-write /sys/devices/system/cpu/cpu0/cpufreq/schedutil/up_rate_limit_us 1750
-write /sys/devices/system/cpu/cpu2/cpufreq/schedutil/down_rate_limit_us 1000
-write /sys/devices/system/cpu/cpu2/cpufreq/schedutil/up_rate_limit_us 2250
+write /sys/devices/system/cpu/cpu0/cpufreq/schedutil/down_rate_limit_us 10000
+write /sys/devices/system/cpu/cpu0/cpufreq/schedutil/up_rate_limit_us 250
+write /sys/devices/system/cpu/cpu2/cpufreq/schedutil/down_rate_limit_us 8750
+write /sys/devices/system/cpu/cpu2/cpufreq/schedutil/up_rate_limit_us 500
 
 # re-enable thermal hotplug
 write /sys/module/msm_thermal/core_control/enabled 1
@@ -120,6 +122,11 @@ for memlat in /sys/class/devfreq/*qcom,memlat-cpu* ; do
     write $memlat/governor "mem_latency"
     write $memlat/polling_interval 10
 done
+
+# Drop msm8996pro's base GPU clock to 133Mhz from 214MHz
+if [ "$soc_machine" == "MSM8996pro" ]; then
+	write /sys/class/kgsl/kgsl-3d0/default_pwrlevel 7
+fi
 
 # This doesn't affect msm8996pro since it's revisions only go to 1.1
 if [ "$soc_revision" == "2.0" ]; then
