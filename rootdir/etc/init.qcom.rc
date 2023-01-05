@@ -362,6 +362,14 @@ on boot
     chown system input /sys/bus/spi/devices/spi8.1/spi_owner
     chown system input /sys/bus/spi/devices/spi8.1/regulator_enable
     chown system input /sys/bus/spi/devices/spi8.1/wakeup_enable
+    
+    # ESS DAC
+    chmod 0660 /sys/devices/soc/c175000.i2c/i2c-1/1-0048/headset_type
+    chmod 0660 /sys/devices/soc/c175000.i2c/i2c-1/1-0048/avc_volume
+    chmod 0660 /sys/devices/soc/c175000.i2c/i2c-1/1-0048/ess_filter
+    chown system system /sys/devices/soc/c175000.i2c/i2c-1/1-0048/headset_type
+    chown system system /sys/devices/soc/c175000.i2c/i2c-1/1-0048/avc_volume
+    chown system system /sys/devices/soc/c175000.i2c/i2c-1/1-0048/ess_filter
 
     write /proc/sys/net/core/netdev_max_backlog 5000
 
