@@ -1,11 +1,20 @@
 allow system_app sysfs_gesture:file rw_file_perms;
 allow system_app vendor_file:file rx_file_perms;
 allow system_app sysfs:file { write read };
-
 # Allow system_app to read and create files in cnd_core_data_file
 allow system_app cnd_core_data_file:dir w_dir_perms;
 allow system_app cnd_core_data_file:file create_file_perms;
-get_prop(system_app, cnd_vendor_prop)
 
 set_prop(system_app, camera_prop)
 set_prop(system_app, spectrum_prop)
+
+allow system_app default_android_service:service_manager { find add };
+allow system_app default_prop:property_service set;
+allow system_app sysfs_zram:dir search;
+allow system_app netd:binder call; 
+
+allow system_app sysfs:file { write };
+allow system_app proc_pagetypeinfo:file { read open getattr };
+allow system_app sysfs_zram:file { read open getattr }; 
+
+allow system_app hal_imsrcsd_hwservice:hwservice_manager find;
