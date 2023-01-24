@@ -6,3 +6,5 @@ allow vold firmware_file:file { read open getattr };
 
 allow vold proc_irq:dir { read open };
 allow vold sysfs_mmc_host:file { setattr w_file_perms };
+
+allow vold hal_bootctl_hwservice:hwservice_manager find;
