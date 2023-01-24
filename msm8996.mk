@@ -15,6 +15,9 @@
 # limitations under the License.
 #
 
+# LG 8996 launched with N
+$(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_n.mk)
+
 # Inherit from common lge product
 $(call inherit-product-if-exists, device/lge/common/common.mk)
 
@@ -138,6 +141,10 @@ PRODUCT_PACKAGES += \
 # Charger
 PRODUCT_PACKAGES += \
     charger_res_images
+    
+# Connectivity Engine support (CNE)
+PRODUCT_PACKAGES += \
+    libcnefeatureconfig
 
 # Device init scripts
 PRODUCT_PACKAGES += \
@@ -179,6 +186,10 @@ PRODUCT_PACKAGES += \
     android.hardware.drm@1.4 \
     android.hardware.drm@1.4.vendor \
     android.hardware.drm@1.4-service.clearkey
+    
+# fwk-detect
+PRODUCT_PACKAGES += \
+    libqti_vndfwk_detect
 
 # Recovery
 PRODUCT_PACKAGES += \
@@ -234,16 +245,14 @@ PRODUCT_COPY_FILES += \
 
 # Privapp Whitelist
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/privapp-permissions-qti.xml:system/etc/permissions/privapp-permissions-qti.xml
+    $(LOCAL_PATH)/configs/qti_whitelist.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/qti_whitelist.xml \
+    $(LOCAL_PATH)/configs/system_ext-privapp-permissions-qti.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/permissions/privapp-permissions-qti.xml \
+    $(LOCAL_PATH)/configs/system-privapp-permissions-qti.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-qti.xml
 
 # IPACM
 PRODUCT_PACKAGES += \
     IPACM_cfg.xml \
     ipacm
-
-# IMS
-PRODUCT_PACKAGES += \
-    ims-ext-common
 
 # IRQ
 PRODUCT_COPY_FILES += \
@@ -317,9 +326,9 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/powerhint.xml:$(TARGET_COPY_OUT_VENDOR)/etc/powerhint.xml \
     $(LOCAL_PATH)/configs/perf/perf-profile0.conf:$(TARGET_COPY_OUT_VENDOR)/etc/perf/perf-profile0.conf
 
-# Qualcomm broadcast whitelist
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/qti_whitelist.xml:system/etc/sysconfig/qti_whitelist.xml
+# QMI
+PRODUCT_PACKAGES += \
+    libjson
 
 # Recovery
 PRODUCT_PACKAGES += \
@@ -331,6 +340,8 @@ PRODUCT_PACKAGES += \
 
 # RIL
 PRODUCT_PACKAGES += \
+    android.hardware.radio@1.4 \
+    android.hardware.radio.config@1.0 \
     CarrierConfigOverlay \
     libprotobuf-cpp-full \
     librmnetctl
@@ -352,7 +363,9 @@ PRODUCT_COPY_FILES += \
 PRODUCT_SOONG_NAMESPACES += \
     $(LOCAL_PATH)
 
-
+# Shims
+PRODUCT_PACKAGES += \
+    libcutils_shim
     
 # TimeKeep
 PRODUCT_PACKAGES += \
@@ -371,11 +384,18 @@ PRODUCT_PACKAGES += \
     vndk-sp \
 
 PRODUCT_COPY_FILES += \
-    prebuilts/vndk/v28/arm64/arch-arm64-armv8-a/shared/vndk-core/libprotobuf-cpp-full.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libprotobuf-cpp-full-v28.so \
+    prebuilts/vndk/v29/arm/arch-arm-armv7-a-neon/shared/vndk-core/libprotobuf-cpp-lite.so:$(TARGET_COPY_OUT_VENDOR)/lib/libprotobuf-cpp-lite-v29.so \
+    prebuilts/vndk/v29/arm64/arch-arm64-armv8-a/shared/vndk-core/libprotobuf-cpp-full.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libprotobuf-cpp-full-v29.so \
     prebuilts/vndk/v29/arm64/arch-arm64-armv8-a/shared/vndk-core/libprotobuf-cpp-lite.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libprotobuf-cpp-lite-v29.so
 
 # Telephony
 PRODUCT_PACKAGES += \
+    ims-ext-common \
+    ims_ext_common.xml \
+    qti-telephony-hidl-wrapper \
+    qti_telephony_hidl_wrapper.xml \
+    qti-telephony-utils \
+    qti_telephony_utils.xml \
     telephony-ext
 
 PRODUCT_BOOT_JARS += \

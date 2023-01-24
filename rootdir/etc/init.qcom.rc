@@ -662,88 +662,10 @@ on property:vold.decrypt=trigger_restart_framework
 on property:persist.env.fastdorm.enabled=true
     setprop persist.radio.data_no_toggle 1
 
-service vendor.cnd /vendor/bin/cnd
-    class main
-    user system
-    group system wifi inet radio wakelock net_admin
-    writepid /dev/cpuset/system-background/tasks
-
-service vendor.dpmQmiMgr /vendor/bin/dpmQmiMgr
-    class main
-    user system
-    group radio system
-
-service vendor.imsqmidaemon /vendor/bin/imsqmidaemon
-    class main
-    user system
-    socket ims_qmid stream 0660 system radio
-    group radio log diag
-
-service vendor.imsdatadaemon /vendor/bin/imsdatadaemon
-    class main
-    user system
-    socket ims_datad stream 0660 system radio
-    group system wifi radio inet log diag
-
-on property:vendor.ims.QMI_DAEMON_STATUS=1
-    start vendor.imsdatadaemon
-
-service vendor.ims_rtp_daemon /vendor/bin/ims_rtp_daemon
-   class main
-   user system
-   group radio diag inet log
-   disabled
-
-service vendor.imsrcsservice /vendor/bin/imsrcsd
-   class main
-   user system
-   group radio diag inet log
-   disabled
-
-on property:vendor.ims.DATA_DAEMON_STATUS=1
-   start vendor.ims_rtp_daemon
-   start vendor.imsrcsservice
-
 service irsc_util /vendor/bin/irsc_util "/vendor/etc/sec_config"
     class core
     user root
     oneshot
-
-service vendor.rmt_storage /vendor/bin/rmt_storage
-    class core
-    user root
-    writepid /dev/cpuset/system-background/tasks
-
-service vendor.rfs_access /vendor/bin/rfs_access
-    class core
-    user root
-    group system net_raw
-    writepid /dev/cpuset/system-background/tasks
-
-service vendor.tftp_server /vendor/bin/tftp_server
-    class core
-    user root
-    group root system
-    writepid /dev/cpuset/system-background/tasks
-
-service ftmd /system/bin/ftmdaemon
-    class late_start
-    user root
-    group bluetooth net_bt_admin misc oem_2901 net_bt
-    disabled
-    oneshot
-
-service port-bridge /system/bin/port-bridge
-    class main
-    user radio
-    group radio system inet
-    oneshot
-
-service qmiproxy /system/bin/qmiproxy
-    class main
-    user radio
-    group radio oem_2901
-    disabled
 
 # QMUX must be in multiple groups to support external process connections
 service qmuxd /system/bin/qmuxd
@@ -809,6 +731,28 @@ service vendor.sensors /vendor/bin/sensors.qti
     group root system
     disabled
     writepid /dev/cpuset/system-background/tasks
+    
+# Start up peripheral manager
+service vendor.per_mgr /vendor/bin/pm-service
+    class core
+    user system
+    group system net_raw
+    ioprio rt 4
+    writepid /dev/cpuset/system-background/tasks
+
+service vendor.per_proxy /vendor/bin/pm-proxy
+    class core
+    user system
+    group system
+    disabled
+    writepid /dev/cpuset/system-background/tasks
+
+on property:init.svc.vendor.per_mgr=running
+    start vendor.per_proxy
+
+on property:sys.shutdown.requested=*
+    stop vendor.per_proxy
+    stop vendor.ims_rtp_daemon
 
 on property:ro.use_data_netmgrd=false
     # netmgr not supported on specific target
@@ -867,14 +811,6 @@ service ds_fmc_appd /system/bin/ds_fmc_appd -p "rmnet0" -D
 on property:persist.data.ds_fmc_app.mode=1
     start ds_fmc_appd
 
-service ims_regmanager /system/bin/exe-ims-regmanagerprocessnative
-    class late_start
-    group net_bt_admin inet radio wifi
-    disabled
-
-on property:persist.ims.regmanager.mode=1
-    start ims_regmanager
-
 on property:ro.data.large_tcp_window_size=true
     # Adjust socket buffer to enlarge TCP receive window for high bandwidth (e.g. DO-RevB)
     write /proc/sys/net/ipv4/tcp_adv_win_scale  2
@@ -883,6 +819,17 @@ service battery_monitor /system/bin/battery_monitor
     user system
     group system
     disabled
+    
+service vendor.ril-daemon2 /vendor/bin/hw/rild -c 2
+    class main
+    user radio
+    disabled
+    group radio cache inet misc audio sdcard_r sdcard_rw diag oem_2901 log
+    capabilities BLOCK_SUSPEND NET_ADMIN NET_RAW
+
+on property:persist.radio.multisim.config=dsds
+    enable vendor.ril-daemon2
+
 
 service ssr_diag /system/bin/ssr_diag
     class late_start
@@ -963,3 +910,6 @@ on property:init.svc.media=restarting
 
 on property:init.svc.servicemanager=restarting
     restart vendor.qcamerasvr
+    
+on property:ro.vendor.ril.mbn_copy_completed=1
+    write /data/vendor/radio/copy_complete 1
