@@ -145,8 +145,11 @@
         <name>android.hardware.keymaster</name>
         <transport>hwbinder</transport>
         <impl level="generic"></impl>
-        <fqname>@3.0::IKeymasterDevice/default</fqname>
-        <fqname>@4.0::IKeymasterDevice/default</fqname>
+        <version>3.0</version>
+        <interface>
+            <name>IKeymasterDevice</name>
+            <instance>default</instance>
+        </interface>
     </hal>
     <hal format="hidl">
         <name>android.hardware.light</name>
