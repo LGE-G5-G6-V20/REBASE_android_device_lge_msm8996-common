@@ -339,8 +339,13 @@ PRODUCT_PACKAGES += \
 
 # RIL
 PRODUCT_PACKAGES += \
+    android.hardware.broadcastradio@2.0 \
+    android.hardware.broadcastradio@2.0-impl \
     android.hardware.radio@1.4 \
-    android.hardware.radio.config@1.0 \
+    android.hardware.radio.config@1.1 \
+    android.hardware.radio.config@1.1.vendor \
+    android.hardware.radio.deprecated@1.0 \
+    android.hardware.radio.deprecated@1.0.vendor \
     CarrierConfigOverlay \
     libprotobuf-cpp-full \
     librmnetctl

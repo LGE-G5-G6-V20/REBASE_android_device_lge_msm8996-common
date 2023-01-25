@@ -47,7 +47,7 @@
     <hal format="hidl">
         <name>android.hardware.broadcastradio</name>
         <transport>hwbinder</transport>
-        <version>1.0</version>
+        <version>2.0</version>
         <interface>
             <name>IBroadcastRadioFactory</name>
             <instance>default</instance>
@@ -200,7 +200,7 @@
     <hal format="hidl">
         <name>android.hardware.radio</name>
         <transport>hwbinder</transport>
-        <version>1.1</version>
+        <version>1.4</version>
         <interface>
             <name>IRadio</name>
             <instance>slot1</instance>
