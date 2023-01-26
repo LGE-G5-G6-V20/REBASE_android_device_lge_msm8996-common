@@ -117,6 +117,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     debug.hwui.use_partial_updates=true \
     debug.hwui.renderer=skiagl \
     debug.renderengine.backend=skiaglthreaded \
+    renderthread.skia.reduceopstasksplitting=true
     dev.pm.dyn_samplingrate=1 \
     persist.demo.hdmirotationlock=false \
     sdm.perf_hint_window=50 \
