@@ -1,2 +1,8 @@
 allow sensors sensors_data_file:file create_file_perms;
 allow sensors sensors_data_file:dir create_dir_perms;
+
+# Placeholder until I update to V30B sensor stuff
+allow sensors sensors:capability { dac_override };
+
+allow sensors mnt_vendor_file:dir { read open write add_name };
+allow sensors mnt_vendor_file:file { open read  write create setattr getattr };
