@@ -9,3 +9,10 @@ allow system_server mpctl_socket:sock_file write;
 allow system_server sysfs:dir search;
 allow system_server sysfs_vibrator:file { read write append };
 get_prop(system_server, vendor_camera_prop);
+
+allow system_server init:binder { call };
+allow system_server userspace_reboot_config_prop:file { read open getattr };
+allow system_server exported_camera_prop:file { read };
+allow system_server userspace_reboot_exported_prop:file { read open getattr };
+allow system_server sysfs_battery_supply:file { getattr open read write };
+allow system_server exported_camera_prop:file { open getattr };
