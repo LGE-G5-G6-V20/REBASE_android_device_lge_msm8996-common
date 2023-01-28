@@ -106,8 +106,14 @@ PRODUCT_PACKAGES += \
 
 -include $(LOCAL_PATH)/audio/config.mk
 
+# Biometrics
+PRODUCT_PACKAGES += \
+    android.hardware.biometrics.fingerprint@2.1.vendor
+    
 # Bluetooth
 PRODUCT_PACKAGES += \
+    android.hardware.bluetooth@1.0 \
+    android.hardware.bluetooth@1.0.vendor \
     android.hardware.bluetooth@1.0-impl \
     android.hardware.bluetooth@1.0-service \
     hwaddrs \
@@ -163,7 +169,14 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.drm@1.0-impl \
     android.hardware.drm@1.0-service \
-    android.hardware.drm@1.3-service.clearkey
+    android.hardware.drm@1.3-service.clearkey \
+    android.hardware.drm@1.0.vendor \
+    android.hardware.drm@1.1.vendor \
+    android.hardware.drm@1.2.vendor \
+    android.hardware.drm@1.3.vendor \
+    android.hardware.drm@1.4 \
+    android.hardware.drm@1.4.vendor \
+    android.hardware.drm@1.4-service.clearkey
 
 # Recovery
 PRODUCT_PACKAGES += \
@@ -172,7 +185,8 @@ PRODUCT_PACKAGES += \
 # Gatekeeper HAL
 PRODUCT_PACKAGES += \
     android.hardware.gatekeeper@1.0-impl \
-    android.hardware.gatekeeper@1.0-service
+    android.hardware.gatekeeper@1.0-service \
+    android.hardware.gatekeeper@1.0.vendor
 
 # Gesture handler
 PRODUCT_PACKAGES += \
@@ -240,7 +254,8 @@ PRODUCT_COPY_FILES += \
 # Keymaster HAL
 PRODUCT_PACKAGES += \
     android.hardware.keymaster@3.0-impl \
-    android.hardware.keymaster@3.0-service
+    android.hardware.keymaster@3.0-service \
+    android.hardware.keymaster@3.0.vendor
 
 # LiveDisplay
 PRODUCT_PACKAGES += \
@@ -258,6 +273,7 @@ PRODUCT_COPY_FILES += \
 
 # Net
 PRODUCT_PACKAGES += \
+    android.system.net.netd@1.0.vendor \
     android.system.net.netd@1.0 \
     libandroid_net \
     netutils-wrapper-1.0
@@ -316,7 +332,7 @@ PRODUCT_PACKAGES += \
     CarrierConfigOverlay \
     libprotobuf-cpp-full \
     librmnetctl
-
+    
 # Seccomp policy
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/seccomp_policy/mediacodec.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediacodec.policy \
@@ -347,7 +363,7 @@ PRODUCT_PACKAGES += \
     libjson \
     libtinyxml \
     libxml2
-
+    
 # Treble
 PRODUCT_PACKAGES += \
     vndk-sp \
