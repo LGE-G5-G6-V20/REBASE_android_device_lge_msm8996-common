@@ -1,5 +1,5 @@
-// Copyright (C) 2017 The Android Open Source Project
-// Copyright (C) 2018 The LineageOS Project
+//
+// Copyright (C) 2017-2019 The LineageOS Project
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,35 +12,33 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+//
 
-cc_binary {
+cc_library_headers {
+    name: "libbfqio_headers",
+    vendor_available: true,
+    export_include_dirs: ["include"],
+}
 
-    relative_install_path: "hw",
-    proprietary: true,
-    owner: "qcom",
-
-    name: "android.hardware.power@1.1-service.lge.msm8996",
-    init_rc: ["android.hardware.power@1.1-service.lge.msm8996.rc"],
+cc_library {
+    name: "libbfqio",
+    vendor_available: true,
     srcs: [
-        "service.cpp",
-        "Power.cpp",
-        "power-helper.c",
-        "metadata-parser.c",
-        "utils.c",
-        "list.c",
-        "hint-data.c",
-        "power-8996.c"
+        "bfqio.c",
     ],
 
     shared_libs: [
-        "libbase",
         "libcutils",
-        "libhidlbase",
         "liblog",
-        "libutils",
-        "android.hardware.power@1.1",
     ],
+    header_libs: [
+        "libbfqio_headers",
+    ],
+    export_header_lib_headers: ["libbfqio_headers"],
 
-    header_libs: ["libhardware_headers"],
-
+    cflags: [
+        "-Werror",
+        "-Wall",
+        "-Wextra",
+    ],
 }

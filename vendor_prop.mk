@@ -111,6 +111,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.surface_flinger.max_frame_buffer_acquired_buffers=5 \
     ro.surface_flinger.supports_background_blur \
     ro.surface_flinger.enable_layer_caching \
+    ro.surface_flinger.force_hwc_copy_for_virtual_displays=true \
     debug.sf.hw=1 \
     debug.egl.hw=1 \
     debug.gralloc.gfx_ubwc_disable=0 \
@@ -205,5 +206,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Storage.xml moment
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.sys.binary_xml=false
+   
+
+# Media Performance Class 12
+PRODUCT_PROPERTY_OVERRIDES += ro.odm.build.media_performance_class=31
 
 
