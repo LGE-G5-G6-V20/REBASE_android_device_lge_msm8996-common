@@ -148,6 +148,12 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.hwui.text_large_cache_width=3072 \
     ro.hwui.text_large_cache_height=2048 \
     ro.hwui.render_ahead=1
+    
+#iorapd
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.iorapd.enable=false \
+    iorapd.perfetto.enable=false \
+    iorapd.readahead.enable=false
 
 # Media
 PRODUCT_PROPERTY_OVERRIDES += \
