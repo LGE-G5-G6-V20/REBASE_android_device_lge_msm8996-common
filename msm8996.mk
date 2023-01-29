@@ -318,6 +318,7 @@ PRODUCT_PACKAGES += \
     libmm-omxcore
     
 # Power
+PRODUCT_PACKAGES += \
     android.hardware.power@1.2.vendor \
     android.hardware.power@1.2 \
     android.hardware.power@1.2-service \
@@ -326,6 +327,11 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/powerhint.xml:$(TARGET_COPY_OUT_VENDOR)/etc/powerhint.xml
+    
+# Perf
+PRODUCT_PACKAGES += \
+    vendor.qti.hardware.perf@1.0.vendor \
+    vendor.qti.hardware.perf@1.0
 
 # QMI
 PRODUCT_PACKAGES += \
