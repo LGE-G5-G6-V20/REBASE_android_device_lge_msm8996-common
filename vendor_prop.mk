@@ -36,7 +36,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
     vendor.audio.flac.sw.decoder.24bit=true \
     persist.vendor.bt.enable.splita2dp=false \
     persist.vendor.audio.speaker.prot.enable=true \
-    persist.vendor.audio.spkr.cal.duration=5
+    persist.vendor.audio.spkr.cal.duration=5 \
+    ro.config.media_vol_steps=35
 
 # Bluetooth
 PRODUCT_PROPERTY_OVERRIDES += \
