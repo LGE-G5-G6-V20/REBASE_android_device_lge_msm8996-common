@@ -468,13 +468,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     GCamGO
 
-# Spectrum
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.spectrum.profile=0
-
-PRODUCT_PACKAGES += \
-    SpectrumTile
-
 # GalleryGO
 PRODUCT_PACKAGES += \
     GalleryGo
