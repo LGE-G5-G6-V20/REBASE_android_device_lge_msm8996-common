@@ -318,6 +318,10 @@ PRODUCT_PACKAGES += \
     libstagefrighthw \
     libmm-omxcore
     
+# Power
+PRODUCT_PACKAGES += \
+    android.hardware.power-service.msm8996-libperfmgr
+    
 # Perf
 PRODUCT_COPY_FILES += \
     system/core/libprocessgroup/profiles/cgroups_28.json:$(TARGET_COPY_OUT_VENDOR)/etc/cgroups.json \
