@@ -369,6 +369,10 @@ PRODUCT_SOONG_NAMESPACES += \
 PRODUCT_PACKAGES += \
     libcutils_shim
     
+# Thermal HAL
+PRODUCT_PACKAGES += \
+    android.hardware.thermal@2.0-service.msm8996
+    
 # TimeKeep
 PRODUCT_PACKAGES += \
     timekeep \
