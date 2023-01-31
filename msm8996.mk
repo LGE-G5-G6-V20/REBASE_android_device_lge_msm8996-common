@@ -318,19 +318,7 @@ PRODUCT_PACKAGES += \
     libstagefrighthw \
     libmm-omxcore
     
-# Power
-PRODUCT_PACKAGES += \
-    android.hardware.power-service-qti \
-    android.hardware.power.stats@1.0-service.mock 
-
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/powerhint.xml:$(TARGET_COPY_OUT_VENDOR)/etc/powerhint.xml
-    
 # Perf
-PRODUCT_PACKAGES += \
-    vendor.qti.hardware.perf@1.0.vendor \
-    vendor.qti.hardware.perf@1.0
-
 PRODUCT_COPY_FILES += \
     system/core/libprocessgroup/profiles/cgroups_28.json:$(TARGET_COPY_OUT_VENDOR)/etc/cgroups.json \
     system/core/libprocessgroup/profiles/task_profiles_28.json:$(TARGET_COPY_OUT_VENDOR)/etc/task_profiles.json
