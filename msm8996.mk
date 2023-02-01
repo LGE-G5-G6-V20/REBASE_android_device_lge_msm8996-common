@@ -156,6 +156,7 @@ PRODUCT_PACKAGES += \
     init.qcom.usb.rc \
     init.target.rc \
     init.spectrum.rc \
+    init.logging.rc \
     ueventd.qcom.rc
 
 # Display
