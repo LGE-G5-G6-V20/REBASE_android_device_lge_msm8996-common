@@ -156,7 +156,7 @@ PRODUCT_PACKAGES += \
     init.qcom.usb.rc \
     init.target.rc \
     init.spectrum.rc \
-    init.logging.rc \
+    init.logging.rc
     ueventd.qcom.rc
 
 # Display
@@ -463,3 +463,6 @@ PRODUCT_PACKAGES += \
 # GalleryGO
 PRODUCT_PACKAGES += \
     GalleryGo
+    
+QCOM_SOONG_NAMESPACE := \
+    $(LOCAL_PATH)/qcom-caf

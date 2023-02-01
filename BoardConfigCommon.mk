@@ -158,10 +158,6 @@ TARGET_PLATFORM_DEVICE_BASE := /devices/soc/
 TARGET_INIT_VENDOR_LIB := //$(COMMON_PATH):libinit_lge-msm8996
 TARGET_RECOVERY_DEVICE_MODULES := libinit_lge-msm8996
 
-#Media
-USE_DEVICE_SPECIFIC_MEDIA := true
-DEVICE_SPECIFIC_MEDIA_PATH := hardware/qcom-caf/msm8996/media
-
 # Partitions
 BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_FLASH_BLOCK_SIZE := 131072 # (BOARD_KERNEL_PAGESIZE * 64)
@@ -215,3 +211,11 @@ TARGET_RECOVERY_UPDATER_LIBS := librecovery_updater_msm8996
 
 # inherit from the proprietary version
 include vendor/lge/msm8996-common/BoardConfigVendor.mk
+
+# QCOM CAF HALs
+USE_DEVICE_SPECIFIC_AUDIO := true
+USE_DEVICE_SPECIFIC_DISPLAY := true
+USE_DEVICE_SPECIFIC_MEDIA := true
+DEVICE_SPECIFIC_AUDIO_PATH := $(COMMON_PATH)/qcom-caf/audio
+DEVICE_SPECIFIC_DISPLAY_PATH := $(COMMON_PATH)/qcom-caf/display
+DEVICE_SPECIFIC_MEDIA_PATH := $(COMMON_PATH)/qcom-caf/media
