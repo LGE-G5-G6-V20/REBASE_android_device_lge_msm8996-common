@@ -328,6 +328,8 @@ PRODUCT_COPY_FILES += \
     
 # Perf
 PRODUCT_PACKAGES += \
+    vendor.qti.hardware.perf@1.0.vendor \
+    vendor.qti.hardware.perf@1.0 \
     libqti-perfd-client
 
 # Cgroup and task_profiles
