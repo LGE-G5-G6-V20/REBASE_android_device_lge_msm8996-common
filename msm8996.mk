@@ -385,9 +385,6 @@ PRODUCT_PACKAGES += \
     
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/thermal_info_config.json:$(TARGET_COPY_OUT_VENDOR)/etc/thermal_info_config.json
-
-PRODUCT_PROPERTY_OVERRIDES += \
-    vendor.thermal.config=thermal_info_config.json
     
 # TimeKeep
 PRODUCT_PACKAGES += \
