@@ -28,57 +28,18 @@ write /sys/module/msm_thermal/core_control/enabled 0
 write /sys/devices/system/cpu/cpu0/online 1
 write /sys/devices/system/cpu/cpu2/online 1
 
-# Tweak interactive governor before trying to switch to schedutil if EAS is available
-write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive
-write /sys/devices/system/cpu/cpu0/cpufreq/interactive/use_sched_load 1
-write /sys/devices/system/cpu/cpu0/cpufreq/interactive/use_migration_notif 1
-write /sys/devices/system/cpu/cpu0/cpufreq/interactive/above_hispeed_delay 19000
-write /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load 90
-write /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_rate 20000
-write /sys/devices/system/cpu/cpu0/cpufreq/interactive/hispeed_freq 960000
-write /sys/devices/system/cpu/cpu0/cpufreq/interactive/io_is_busy 1
-write /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads 80
-write /sys/devices/system/cpu/cpu0/cpufreq/interactive/min_sample_time 19000
-write /sys/devices/system/cpu/cpu0/cpufreq/interactive/max_freq_hysteresis 79000
-write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 300000
-write /sys/devices/system/cpu/cpu0/cpufreq/interactive/ignore_hispeed_on_notif 0
-
-write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor interactive
-write /sys/devices/system/cpu/cpu2/cpufreq/interactive/use_sched_load 1
-write /sys/devices/system/cpu/cpu2/cpufreq/interactive/use_migration_notif 1
-write /sys/devices/system/cpu/cpu2/cpufreq/interactive/above_hispeed_delay "19000 1400000:39000 1700000:19000 2100000:79000"
-
-write /sys/devices/system/cpu/cpu2/cpufreq/interactive/go_hispeed_load 90
-write /sys/devices/system/cpu/cpu2/cpufreq/interactive/timer_rate 20000
-write /sys/devices/system/cpu/cpu2/cpufreq/interactive/hispeed_freq 1248000
-write /sys/devices/system/cpu/cpu2/cpufreq/interactive/io_is_busy 1
-write /sys/devices/system/cpu/cpu2/cpufreq/interactive/target_loads "85 1500000:90 1800000:70 2100000:95"
-
-write /sys/devices/system/cpu/cpu2/cpufreq/interactive/min_sample_time 19000
-write /sys/devices/system/cpu/cpu2/cpufreq/interactive/max_freq_hysteresis 39000
-write /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq 300000
-write /sys/devices/system/cpu/cpu2/cpufreq/interactive/ignore_hispeed_on_notif 0
-
-# if EAS is present, switch to schedutil governor (no effect if not EAS)
-write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "schedutil"
-write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor "schedutil"
-
-# set schedutil adjustments, based on what a "Balanced" Spectrum profile 
-# would be for the LGE_8996 platform. With this profile, the SoC's
-# CPU0 (little core cluster) will boost slightly more than CPU2 (big core cluster)
-# since the LITTLE 1.2GHz cap from the Balanced profile is where they start
-# losing efficiency.
-write /sys/devices/system/cpu/cpu0/cpufreq/schedutil/down_rate_limit_us 10000
-write /sys/devices/system/cpu/cpu0/cpufreq/schedutil/up_rate_limit_us 250
-write /sys/devices/system/cpu/cpu2/cpufreq/schedutil/down_rate_limit_us 8750
-write /sys/devices/system/cpu/cpu2/cpufreq/schedutil/up_rate_limit_us 500
+# configure governor settings for little cluster
+echo "schedutil" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+echo 500 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/up_rate_limit_us
+echo 20000 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/down_rate_limit_us 20000
+        
+# configure governor settings for big cluster
+echo "schedutil" > /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor
+echo 500 > /sys/devices/system/cpu/cpu2/cpufreq/schedutil/up_rate_limit_us
+echo 20000 > /sys/devices/system/cpu/cpu2/cpufreq/schedutil/down_rate_limit_us 20000
 
 # re-enable thermal hotplug
 write /sys/module/msm_thermal/core_control/enabled 1
-
-# input boost configuration
-write /sys/module/cpu_boost/parameters/input_boost_freq "0:1324800 2:1324800"
-write /sys/module/cpu_boost/parameters/input_boost_ms 40
 
 # Setting b.L scheduler parameters
 write /proc/sys/kernel/sched_migration_fixup 1
