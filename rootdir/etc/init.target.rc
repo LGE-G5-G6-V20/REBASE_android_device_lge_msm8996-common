@@ -143,6 +143,11 @@ on post-fs-data
     mkdir /persist/data/tz 0700 system system
     mkdir /persist/data/qc_senseid 0700 system system
     mkdir /persist/bms 0700 root system
+    
+# initialize powerHAL when boot is completed
+on property:sys.boot_completed=1
+    setprop vendor.powerhal.init 1
+    
 
 # Start camera server as daemon
 service vendor.qcamerasvr /vendor/bin/mm-qcamera-daemon
