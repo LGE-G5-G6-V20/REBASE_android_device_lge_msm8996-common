@@ -127,6 +127,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     dev.pm.dyn_samplingrate=1 \
     persist.demo.hdmirotationlock=false \
     sdm.perf_hint_window=25 \
+    sdm.debug.disable_skip_validate=1 \
     persist.hwc.enable_vds=1 \
 
 # Surfaceflinger
