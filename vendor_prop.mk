@@ -126,7 +126,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     renderthread.skia.reduceopstasksplitting=true
     dev.pm.dyn_samplingrate=1 \
     persist.demo.hdmirotationlock=false \
-    sdm.perf_hint_window=50 \
+    sdm.perf_hint_window=25 \
     persist.hwc.enable_vds=1 \
 
 # Surfaceflinger
