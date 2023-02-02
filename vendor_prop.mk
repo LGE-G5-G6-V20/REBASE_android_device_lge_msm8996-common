@@ -114,7 +114,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.hardware.vulkan=adreno \
     ro.hardware.egl=adreno \
     sdm.debug.disable_rotator_split=1 \
-    ro.surface_flinger.max_frame_buffer_acquired_buffers=5 \
+    ro.surface_flinger.max_frame_buffer_acquired_buffers=3 \
     ro.surface_flinger.supports_background_blur \
     ro.surface_flinger.enable_layer_caching \
     debug.sf.hw=1 \
