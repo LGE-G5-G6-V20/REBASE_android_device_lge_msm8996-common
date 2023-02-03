@@ -44,15 +44,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.bt.bdaddr_path=/data/misc/bluetooth/bdaddr \
     ro.rfkilldisabled=1 # Disable for libbt, handled by brcm-uim-sysfs
 
-# Camera
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.camera.notify_nfc=1 \
-    vidc.debug.perf.mode=2 \
-    vidc.enc.dcvs.extra-buff-count=2 \
-    persist.audio.camcorder.stereo=true \
-    persist.camera.preview.ubwc=0 \
-    persist.camera.video.ubwc=0
-
 # Charger
 PRODUCT_PRODUCT_PROPERTIES += \
     ro.charger.disable_init_blank=true \
