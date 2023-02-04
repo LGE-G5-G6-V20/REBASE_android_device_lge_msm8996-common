@@ -1754,7 +1754,7 @@ uint8_t get_num_of_cameras()
     struct sensor_init_cfg_data cfg;
     char prop[PROPERTY_VALUE_MAX];
 
-    LOGD("E");
+    LOGI("Getting the amount of available cameras...\n");
 
     property_get("vold.decrypt", prop, "0");
     int decrypt = atoi(prop);
@@ -1771,9 +1771,12 @@ uint8_t get_num_of_cameras()
         snprintf(dev_name, sizeof(dev_name), "/dev/media%d", num_media_devices);
         dev_fd = open(dev_name, O_RDWR | O_NONBLOCK);
         if (dev_fd < 0) {
-            LOGD("Done discovering media devices\n");
+            LOGI("There's none, or no additional media devices to be found...\n");
             break;
         }
+		else {
+			LOGI("Opening /dev/media%d...\n", num_media_devices);
+		}
         num_media_devices++;
         rc = ioctl(dev_fd, MEDIA_IOC_DEVICE_INFO, &mdev_info);
         if (rc < 0) {
@@ -1782,9 +1785,13 @@ uint8_t get_num_of_cameras()
             dev_fd = -1;
             break;
         }
+		else {
+			LOGI("Successful ioctl on /dev/media%d\n", num_media_devices-1);
+		}
 
         if (strncmp(mdev_info.model, MSM_CONFIGURATION_NAME,
           sizeof(mdev_info.model)) != 0) {
+			LOGI("Camera model on /dev/media%d doesn't match expected config name...\n", num_media_devices-1);
             close(dev_fd);
             dev_fd = -1;
             continue;
@@ -1794,17 +1801,18 @@ uint8_t get_num_of_cameras()
             struct media_entity_desc entity;
             memset(&entity, 0, sizeof(entity));
             entity.id = num_entities++;
-            LOGD("entity id %d", entity.id);
+            LOGI("entity id %d\n", entity.id);
             rc = ioctl(dev_fd, MEDIA_IOC_ENUM_ENTITIES, &entity);
             if (rc < 0) {
-                LOGD("Done enumerating media entities");
+                LOGI("There's none, or no additional media entities to enumerate...\n");
                 rc = 0;
                 break;
             }
-            LOGD("entity name %s type %d group id %d",
+            LOGI("entity name %s type %d group id %d\n",
                 entity.name, entity.type, entity.group_id);
             if (entity.type == MEDIA_ENT_T_V4L2_SUBDEV &&
                 entity.group_id == MSM_CAMERA_SUBDEV_SENSOR_INIT) {
+				LOGI("got /dev/%s 's subdev, v4l2 and sensor init data \n", entity.name);
                 snprintf(subdev_name, sizeof(dev_name), "/dev/%s", entity.name);
                 break;
             }
@@ -1816,17 +1824,17 @@ uint8_t get_num_of_cameras()
     /* Open sensor_init subdev */
     sd_fd = open(subdev_name, O_RDWR);
     if (sd_fd < 0) {
-        LOGE("Open sensor_init subdev failed");
+        LOGI("Open sensor_init subdev failed\n");
         return FALSE;
     }
 
     cfg.cfgtype = CFG_SINIT_PROBE_WAIT_DONE;
     cfg.cfg.setting = NULL;
     if (ioctl(sd_fd, VIDIOC_MSM_SENSOR_INIT_CFG, &cfg) < 0) {
-        LOGI("failed...Camera Daemon may not up so try again");
+        LOGI("failed...Camera Daemon may not be up yet, trying again...\n");
         for(i = 0; i < (MM_CAMERA_EVT_ENTRY_MAX + EXTRA_ENTRY); i++) {
             if (ioctl(sd_fd, VIDIOC_MSM_SENSOR_INIT_CFG, &cfg) < 0) {
-                LOGI("failed...Camera Daemon may not up so try again");
+                LOGI("failed...Camera Daemon may not be up yet\n");
                 continue;
             }
             else
@@ -1845,9 +1853,13 @@ uint8_t get_num_of_cameras()
         snprintf(dev_name, sizeof(dev_name), "/dev/media%d", num_media_devices);
         dev_fd = open(dev_name, O_RDWR | O_NONBLOCK);
         if (dev_fd < 0) {
-            LOGD("Done discovering media devices: %s\n", strerror(errno));
+            LOGI("Error trying to discover media devices: %s\n", strerror(errno));
             break;
         }
+		else 
+		{
+			LOGI("Discovered media device: /dev/media%d\n", num_media_devices);
+		}
         num_media_devices++;
         memset(&mdev_info, 0, sizeof(mdev_info));
         rc = ioctl(dev_fd, MEDIA_IOC_DEVICE_INFO, &mdev_info);
@@ -1858,8 +1870,13 @@ uint8_t get_num_of_cameras()
             num_cameras = 0;
             break;
         }
+		else 
+		{
+			LOGI("Successful ioctl on /dev/media%d\n", num_media_devices-1);
+		}
 
         if(strncmp(mdev_info.model, MSM_CAMERA_NAME, sizeof(mdev_info.model)) != 0) {
+			LOGI("Found camera model name: %s but doesn't match expected name\n", mdev_info.model);
             close(dev_fd);
             dev_fd = -1;
             continue;
@@ -1871,14 +1888,15 @@ uint8_t get_num_of_cameras()
             entity.id = num_entities++;
             rc = ioctl(dev_fd, MEDIA_IOC_ENUM_ENTITIES, &entity);
             if (rc < 0) {
-                LOGD("Done enumerating media entities\n");
+                LOGI("There's none, or no additional media entities to enumerate...\n");
                 rc = 0;
                 break;
             }
+			LOGI("Enumerated media entity %d\n", entity.id);
             if(entity.type == MEDIA_ENT_T_DEVNODE_V4L && entity.group_id == QCAMERA_VNODE_GROUP_ID) {
                 strlcpy(g_cam_ctrl.video_dev_name[num_cameras],
                      entity.name, sizeof(entity.name));
-                LOGE("dev_info[id=%d,name='%s']\n",
+                LOGI("Found camera: dev_info[id=%d,name='%s']\n",
                     (int)num_cameras, g_cam_ctrl.video_dev_name[num_cameras]);
                 num_cameras++;
                 break;
@@ -1887,7 +1905,7 @@ uint8_t get_num_of_cameras()
         close(dev_fd);
         dev_fd = -1;
         if (num_cameras >= MM_CAMERA_MAX_NUM_SENSORS) {
-            LOGW("Maximum number of camera reached %d", num_cameras);
+            LOGI("Maximum number of camera reached %d\n", num_cameras);
             break;
         }
     }
@@ -1897,7 +1915,7 @@ uint8_t get_num_of_cameras()
     sort_camera_info(g_cam_ctrl.num_cam);
     /* unlock the mutex */
     pthread_mutex_unlock(&g_intf_lock);
-    LOGE("num_cameras=%d\n", (int)g_cam_ctrl.num_cam);
+    LOGI("num_cameras=%d\n", (int)g_cam_ctrl.num_cam);
     return(uint8_t)g_cam_ctrl.num_cam;
 }
 
