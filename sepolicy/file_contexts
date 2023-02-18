@@ -34,9 +34,9 @@
 /sys/devices/virtual/graphics/fb[0-2](/.*)?                         u:object_r:sysfs_graphics:s0
 
 # HALs
-/vendor/bin/hw/android\.hardware\.power\.stats@1\.0-service\.pixel u:object_r:hal_power_stats_default_exec:s0
-/(vendor|system/vendor)/bin/hw/android\.hardware\.thermal@2\.0-service\.pixel         	 u:object_r:hal_thermal_default_exec:s0
-/(vendor|system/vendor)/bin/hw/android\.hardware\.power-service\.pixel-libperfmgr    u:object_r:hal_power_default_exec:s0
+/(vendor|system/vendor)/bin/hw/android\.hardware\.power\.stats@1\.0-service\.mock			       u:object_r:hal_power_stats_default_exec:s0
+/(vendor|system/vendor)/bin/hw/android\.hardware\.thermal@2\.0-service\.msm8996         	 u:object_r:hal_thermal_default_exec:s0
+/(vendor|system/vendor)/bin/hw/android\.hardware\.power-service\.msm8996-libperfmgr    u:object_r:hal_power_default_exec:s0
 
 # Init
 /(vendor|system/vendor)/bin/init\.power\.sh                         u:object_r:init_power_exec:s0
@@ -138,4 +138,3 @@
 
 # Thermal
 /sys/devices(/platform)?/soc/[a-f0-9]+.qcom,msm-thermal/uio/uio[0-9]+(/.*)?        u:object_r:sysfs_uio_file:s0
-/vendor/bin/thermal_symlinks                                  u:object_r:init-thermal-symlinks-sh_exec:s0

@@ -318,10 +318,9 @@ PRODUCT_PACKAGES += \
     libstagefrighthw \
     libmm-omxcore
     
-# Pixel Power
+# Power
 PRODUCT_PACKAGES += \
-    android.hardware.power-service.pixel-libperfmgr \
-    android.hardware.power.stats@1.0-service.pixel
+    android.hardware.power-service.msm8996-libperfmgr
     
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/powerhint.json:$(TARGET_COPY_OUT_VENDOR)/etc/powerhint.json
@@ -371,23 +370,15 @@ PRODUCT_COPY_FILES += \
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
     hardware/google/interfaces \
-    hardware/google/pixel \
     $(LOCAL_PATH)
 
 # Shims
 PRODUCT_PACKAGES += \
     libcutils_shim
     
-# Pixel thermal
-SOONG_CONFIG_NAMESPACES += thermal_hal_feature
-SOONG_CONFIG_thermal_hal_feature += \
-    pid \
-
-SOONG_CONFIG_thermal_hal_feature_pid := apply_1_0
-
+# Thermal HAL
 PRODUCT_PACKAGES += \
-    android.hardware.thermal@2.0-service.pixel \
-    thermal_symlinks
+    android.hardware.thermal@2.0-service.msm8996
     
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/thermal_info_config.json:$(TARGET_COPY_OUT_VENDOR)/etc/thermal_info_config.json
