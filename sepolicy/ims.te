@@ -3,6 +3,3 @@ allow ims diag_prop:property_service set;
 get_prop(ims, diag_prop);
 allow ims sysfs:file r_file_perms;
 allow ims sysfs_data:file r_file_perms;
-allow vendor_init thermal_link_device:dir r_dir_perms;
-allow vendor_init thermal_link_device:lnk_file r_file_perms;
-set_prop(vendor_init, vendor_thermal_prop)
