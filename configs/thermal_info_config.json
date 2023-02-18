@@ -115,6 +115,16 @@
             "VrThreshold":58.0,
             "Multiplier":1.0,
             "Monitor":true
+            }
+        ],
+    "CoolingDevices":[
+        {
+            "Name":"thermal-cpufreq-0",
+            "Type":"CPU"
+        },
+        {
+            "Name":"thermal-cpufreq-1",
+            "Type":"CPU"
         }
     ]
 }
